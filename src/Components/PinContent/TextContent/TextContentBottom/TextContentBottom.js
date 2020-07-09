@@ -20,8 +20,7 @@ export default TextContentBottom;
 const Bottom = styled.div`
   width: 100%;
   background-color: transparent;
-  padding-left: 40px;
-  padding-right: 40px;
+  padding: 0 40px;
   margin-top: 40px;
   margin-bottom: 20px;
   display: flex;
@@ -38,8 +37,8 @@ const UserImage = styled.a`
   overflow: hidden;
 `;
 
-const Img = styled.img.attrs((props) => ({
-  src: props.source ? props.source : defaultUser,
+const Img = styled.img.attrs(({ source }) => ({
+  src: source ? source : defaultUser,
   alt: "user",
 }))`
   display: block;

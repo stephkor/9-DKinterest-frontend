@@ -5,15 +5,15 @@ import Comment from "./Comment";
 const CommentList = () => {
   return (
     <Container>
-      {[0, 0].map((el) => (
-        <Comment />
-      ))}
+      {Array(2)
+        .fill()
+        .map((element) => (
+          <Comment />
+        ))}
     </Container>
   );
 };
 
 export default CommentList;
 
-const Container = styled.div`
-  width: 100%;
-`;
+const Container = styled.div``;

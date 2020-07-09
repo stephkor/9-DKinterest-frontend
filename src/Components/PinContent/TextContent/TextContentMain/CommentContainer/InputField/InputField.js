@@ -2,15 +2,16 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import defaultUser from "Images/default_user.png";
 
+const TEXTAREA_LINE_HEIGHT = 18;
+const MIN_ROWS = 3;
+
 const InputField = () => {
   const [isActive, setIsActive] = useState(false);
   const [comment, setComment] = useState("");
 
   const handleChange = (event) => {
-    const textAreaLineHieght = 18;
-    const minRows = 3;
-    event.target.rows = minRows;
-    const currRows = ~~(event.target.scrollHeight / textAreaLineHieght);
+    event.target.rows = MIN_ROWS;
+    const currRows = ~~(event.target.scrollHeight / TEXTAREA_LINE_HEIGHT);
     event.target.rows = currRows;
     setComment(event.target.value);
   };
@@ -59,8 +60,8 @@ const UserImage = styled.a`
   overflow: hidden;
 `;
 
-const Img = styled.img.attrs((props) => ({
-  src: props.source ? props.source : defaultUser,
+const Img = styled.img.attrs(({ source }) => ({
+  src: source ? source : defaultUser,
   alt: "user",
 }))`
   width: 100%;
@@ -83,20 +84,20 @@ const CommentBox = styled.div`
   min-height: 48px;
   border: 1px solid #ddd;
   padding: 16px;
-  border-radius: ${(props) => (props.isActive ? "16px" : "26px")};
-  margin-left: ${(props) => (props.isActive ? "8px" : "16px")};
+  border-radius: ${({ isActive }) => (isActive ? "16px" : "26px")};
+  margin-left: ${({ isActive }) => (isActive ? "8px" : "16px")};
 `;
 
-const TextArea = styled.textarea.attrs((props) => ({
-  placeholder: props.isActive ? "" : "댓글 추가",
-  rows: props.isActive ? "3" : "1",
+const TextArea = styled.textarea.attrs(({ isActive }) => ({
+  placeholder: isActive ? "" : "댓글 추가",
+  rows: isActive ? "3" : "1",
 }))`
   width: 100%;
   border: none;
   resize: none;
   outline: 0;
   font-size: 16px;
-  color: ${(props) => (props.isActive ? "#111" : "#aaa")};
+  color: ${({ isActive }) => (isActive ? "#111" : "#aaa")};
   &::-webkit-scrollbar {
     display: none;
   }
@@ -106,7 +107,7 @@ const TextArea = styled.textarea.attrs((props) => ({
 const ButtonsContainer = styled.div`
   margin-top: 16px;
   width: 100%;
-  display: ${(props) => (props.isActive ? "flex" : "none")};
+  display: ${({ isActive }) => (isActive ? "flex" : "none")};
   justify-content: flex-end;
 `;
 
@@ -126,8 +127,8 @@ const CancelButton = styled.button`
   }
 `;
 
-const CompletelButton = styled.button.attrs((props) => ({
-  disabled: props.comment ? false : true,
+const CompletelButton = styled.button.attrs(({ comment }) => ({
+  disabled: comment ? false : true,
 }))`
   width: 60px;
   height: 40px;
@@ -136,7 +137,7 @@ const CompletelButton = styled.button.attrs((props) => ({
   border-radius: 24px;
   font-size: 16px;
   font-weight: bold;
-  cursor: ${(props) => (props.comment ? "pointer" : "default")};
-  color: ${(props) => (props.comment ? "#ffffff" : "#767676")};
-  background-color: ${(props) => (props.comment ? "#e60023" : "#efefef")};
+  cursor: ${({ comment }) => (comment ? "pointer" : "default")};
+  color: ${({ comment }) => (comment ? "#ffffff" : "#767676")};
+  background-color: ${({ comment }) => (comment ? "#e60023" : "#efefef")};
 `;

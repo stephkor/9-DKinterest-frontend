@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { Fragment, useState } from "react";
 import styled from "styled-components";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import CommentList from "./CommentList";
@@ -20,8 +20,12 @@ const CommentContainer = () => {
         </RoundButton>
       </Block>
       <CommentSection>
-        {isActive ? <CommentList /> : null}
-        {isActive ? <InputField /> : null}
+        {isActive && (
+          <Fragment>
+            <CommentList />
+            <InputField />
+          </Fragment>
+        )}
       </CommentSection>
     </Container>
   );
@@ -53,9 +57,9 @@ const RoundButton = styled.button`
   &:hover {
     background-color: rgba(226, 226, 226);
   }
-  width: ${(props) => (props.size ? props.size : "0px")};
-  height: ${(props) => (props.size ? props.size : "0px")};
-  font-size: ${(props) => (props.fontSize ? props.fontSize : "0px")};
+  width: ${({ size }) => (size ? size : "0px")};
+  height: ${({ size }) => (size ? size : "0px")};
+  font-size: ${({ fontSize }) => (fontSize ? fontSize : "0px")};
 `;
 
 const CommentSection = styled.div`

@@ -53,8 +53,8 @@ const UserImage = styled.a`
   overflow: hidden;
 `;
 
-const Img = styled.img.attrs((props) => ({
-  src: props.source ? props.source : defaultUser,
+const Img = styled.img.attrs(({ source }) => ({
+  src: source ? source : defaultUser,
   alt: "user",
 }))`
   width: 100%;
@@ -115,8 +115,8 @@ const RoundButton = styled.button`
   &:hover {
     background-color: rgba(226, 226, 226);
   }
-  width: ${(props) => (props.size ? props.size : "0px")};
-  height: ${(props) => (props.size ? props.size : "0px")};
-  font-size: ${(props) => (props.fontSize ? props.fontSize : "0px")};
+  width: ${({ size }) => (size ? size : "0px")};
+  height: ${({ size }) => (size ? size : "0px")};
+  font-size: ${({ fontSize }) => (fontSize ? fontSize : "0px")};
   margin: 0 4px;
 `;

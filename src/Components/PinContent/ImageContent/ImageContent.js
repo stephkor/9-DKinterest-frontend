@@ -16,8 +16,7 @@ export default ImageContent;
 
 const Container = styled.div`
   width: 508px;
-  border-top-left-radius: 32px;
-  border-bottom-left-radius: 32px;
+  border-radius: 32px 0px 0px 32px;
   background-color: #ffffff;
   overflow: hidden;
 `;
@@ -26,10 +25,10 @@ const Image = styled.div`
   position: relative;
 `;
 
-const Img = styled.img.attrs((props) => ({
+const Img = styled.img.attrs(({ source }) => ({
   width: "100%",
   height: "auto",
-  src: props.source,
+  src: source,
 }))`
   display: block;
   position: relative;

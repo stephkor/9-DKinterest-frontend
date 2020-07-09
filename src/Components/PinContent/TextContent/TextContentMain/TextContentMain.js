@@ -74,8 +74,8 @@ const UserImage = styled.a`
   overflow: hidden;
 `;
 
-const Img = styled.img.attrs((props) => ({
-  src: props.source ? props.source : defaultUser,
+const Img = styled.img.attrs(({ source }) => ({
+  src: source ? source : defaultUser,
   alt: "user",
 }))`
   display: block;

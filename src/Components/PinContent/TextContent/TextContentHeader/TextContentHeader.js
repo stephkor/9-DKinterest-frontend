@@ -18,7 +18,7 @@ const TextContentHeader = () => {
         </RoundButton>
       </div>
       <ButtonContainer>
-        <BoardCategoryButton onClick={() => setIsBoardOpen(true)}>
+        <BoardCategoryButton onClick={() => setIsBoardOpen(!isBoardOpen)}>
           <span>시도할 만한 요리법</span>
           <IoIosArrowDown />
         </BoardCategoryButton>
@@ -55,9 +55,9 @@ const RoundButton = styled.button`
   &:hover {
     background-color: rgba(226, 226, 226);
   }
-  width: ${(props) => (props.size ? props.size : "0px")};
-  height: ${(props) => (props.size ? props.size : "0px")};
-  font-size: ${(props) => (props.fontSize ? props.fontSize : "0px")};
+  width: ${({ size }) => (size ? size : "0px")};
+  height: ${({ size }) => (size ? size : "0px")};
+  font-size: ${({ fontSize }) => (fontSize ? fontSize : "0px")};
 `;
 
 const ButtonContainer = styled.div`
@@ -107,5 +107,5 @@ const SaveButton = styled.button`
   color: #ffffff;
   font-size: 12px;
   font-weight: bold;
-  display: ${(props) => (props.status ? "none" : "block")};
+  display: ${({ status }) => (status ? "none" : "block")};
 `;
