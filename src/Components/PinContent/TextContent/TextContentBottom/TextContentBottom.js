@@ -2,14 +2,19 @@ import React from "react";
 import styled from "styled-components";
 import defaultUser from "Images/default_user.png";
 
-const TextContentBottom = () => {
+const TextContentBottom = ({
+  externalAccount,
+  externalAccountImg,
+  boardName,
+}) => {
   return (
     <Bottom>
       <UserImage>
-        <Img source="https://randomuser.me/api/portraits/women/17.jpg" />
+        <Img source={externalAccountImg} />
       </UserImage>
       <SaverInfo>
-        <a>user</a> 님이 <a>수채화 아트</a>에 저장
+        <a>{externalAccount && externalAccount}</a> 님이{" "}
+        <a>{boardName && boardName}</a>에 저장
       </SaverInfo>
     </Bottom>
   );

@@ -3,22 +3,27 @@ import styled from "styled-components";
 import defaultUser from "Images/default_user.png";
 import CommentContainer from "./CommentContainer";
 
-const TextContentMain = () => {
+const TextContentMain = ({
+  link,
+  title,
+  detail,
+  internalAccount,
+  internalAccountImg,
+  followNumber,
+}) => {
   return (
     <Main>
-      <Source>freepik.com</Source>
-      <Title>Cat Paw Kitten</Title>
-      <Description>
-        Discover thousands of Premium vectors available in AI and EPS formats
-      </Description>
+      <Source>{link && link}</Source>
+      <Title>{title && title}</Title>
+      <Description>{detail && detail}</Description>
       <UserContainer>
         <UserInfo>
           <UserImage>
-            <Img source="https://randomuser.me/api/portraits/women/27.jpg" />
+            <Img source={internalAccountImg && internalAccountImg} />
           </UserImage>
           <UserName>
-            <span>Wattpad</span>
-            <span>팔로워 63.5만명</span>
+            <span>{internalAccount && internalAccount}</span>
+            <span>{followNumber && `팔로워 ${followNumber / 10000}만명`}</span>
           </UserName>
         </UserInfo>
         <FollowButton>팔로우</FollowButton>

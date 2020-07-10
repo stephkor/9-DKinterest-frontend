@@ -3,12 +3,12 @@ import styled from "styled-components";
 import TextContent from "./TextContent/TextContent";
 import ImageContent from "./ImageContent/ImageContent";
 
-const PinContent = () => {
+const PinContent = ({ pin }) => {
   return (
     <Container>
       <ContentBox>
-        <ImageContent />
-        <TextContent />
+        <ImageContent source={pin.imgUrl} link={pin.link} />
+        <TextContent {...pin} />
       </ContentBox>
     </Container>
   );
