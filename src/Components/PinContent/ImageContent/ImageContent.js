@@ -1,11 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 
-const ImageContent = () => {
+const ImageContent = ({ source }) => {
   return (
     <Container>
       <Image>
-        <Img source="https://i.pinimg.com/564x/94/15/6d/94156d8f5ac14598d372cd206118b317.jpg" />
+        <Img source={source} />
         <Overlay />
       </Image>
     </Container>

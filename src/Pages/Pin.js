@@ -1,13 +1,25 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import PinContent from "Components/PinContent";
 import SimilarPin from "Components/SimilarPin";
 
 const Pin = () => {
+  const [pin, setPin] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:3000/pinData.json")
+      .then((res) => res.json())
+      .then(({ pin }) => setPin(pin[0]));
+  }, []);
+
   return (
     <Container>
-      <PinContent />
-      <SimilarPin />
+      {Object.entries(pin).length > 0 && (
+        <>
+          <PinContent pin={pin} />
+          <SimilarPin />
+        </>
+      )}
     </Container>
   );
 };

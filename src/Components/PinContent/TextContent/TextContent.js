@@ -4,12 +4,34 @@ import TextContentHeader from "./TextContentHeader";
 import TextContentMain from "./TextContentMain";
 import TextContentBottom from "./TextContentBottom";
 
-const TextContent = () => {
+const TextContent = ({
+  link,
+  title,
+  detail,
+  internalAccount,
+  internalAccountImg,
+  followNumber,
+  externalAccount,
+  externalAccountImg,
+  boardName,
+  imgUrl,
+}) => {
   return (
     <Container>
-      <TextContentHeader />
-      <TextContentMain />
-      <TextContentBottom />
+      <TextContentHeader source={imgUrl} />
+      <TextContentMain
+        link={link}
+        title={title}
+        detail={detail}
+        internalAccount={internalAccount}
+        internalAccountImg={internalAccountImg}
+        followNumber={followNumber}
+      />
+      <TextContentBottom
+        externalAccount={externalAccount}
+        externalAccountImg={externalAccountImg}
+        boardName={boardName}
+      />
     </Container>
   );
 };
