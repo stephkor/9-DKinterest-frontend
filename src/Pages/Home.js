@@ -1,5 +1,4 @@
 import React from "react";
-import Placeholder from "react-placeholder";
 import PinWrap from "./PinWrap";
 import NavBar from "./NavBar";
 import styled from "styled-components";
@@ -97,7 +96,6 @@ class Home extends React.Component {
             <li>로그아웃</li>
           </ul>
         </Dropdown>
-        <Placeholder />
         <PinList>
           {category.map((data, idx) => {
             // console.log(data);
