@@ -4,9 +4,11 @@ import { MdNotifications } from "react-icons/md";
 import { AiFillMessage } from "react-icons/ai";
 import { IoIosArrowDown } from "react-icons/io";
 import styled from "styled-components";
+import defaultUser from "Images/default_user.png";
 
 class NavBar extends React.Component {
   render() {
+    const { dropdown } = this.props;
     return (
       <Nav>
         <MenuWrap>
@@ -33,10 +35,13 @@ class NavBar extends React.Component {
             </div>
 
             <SpanWrap>
-              <span>S</span>
+              <img
+                alt="profilePic"
+                src={defaultUser}
+              />
             </SpanWrap>
 
-            <div onClick={this.dropdownHandler}>
+            <div onClick={dropdown}>
               <ArrowDown />
             </div>
           </li>
@@ -118,6 +123,10 @@ const SpanWrap = styled.div`
   border-radius: 50%;
   text-align: center;
   padding: 6px;
+  img {
+    width: 32px;
+     height: 32px ;
+  }
 `;
 
 const MenuWrap = styled.ul`

@@ -1,0 +1,10 @@
+{
+	"account": [
+		{
+			"accountId": 1,
+			"accountName": "BuzzFeed",
+			"accountImage": "https://i.pinimg.com/280x280_RS/fa/8a/7e/fa8a7e1447dcb521d047df2c4147d9d9.jpg",
+			"accountFollow": 19
+		}
+	]
+}
