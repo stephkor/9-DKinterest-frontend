@@ -13,3 +13,16 @@ export const GoogleSVG = [
 
 export const KakaoSVG =
   "M128 36C70.562 36 24 72.713 24 118c0 29.279 19.466 54.97 48.748 69.477-1.593 5.494-10.237 35.344-10.581 37.689 0 0-.207 1.762.934 2.434s2.483.15 2.483.15c3.272-.457 37.943-24.811 43.944-29.04 5.995.849 12.168 1.29 18.472 1.29 57.438 0 104-36.712 104-82 0-45.287-46.562-82-104-82z";
+
+export const urlList = [
+  "http://localhost:3000/mock/dinner.json",
+  "http://localhost:3000/mock/interior.json",
+  "http://localhost:3000/mock/fashion.json",
+  "http://localhost:3000/mock/gardening.json",
+  "http://localhost:3000/mock/interest.json",
+];
+
+export const serverUrl = "http://10.58.0.193:8000";
+export const signUp = serverUrl + "/account/sign-up";
+export const signIn = serverUrl + "/account/sign-in";
+export const interestUrl = serverUrl + "/account/interest";

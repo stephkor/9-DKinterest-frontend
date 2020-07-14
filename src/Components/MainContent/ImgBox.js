@@ -1,33 +1,34 @@
 import React, { useState, useEffect } from "react";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import axios from "axios";
+import { urlList } from "./Config";
 
-const GetImg = () => {
+const ImgBox = ({ tabNum, downScreen, changeImg }) => {
   const [imgUrl, setImgUrl] = useState("");
 
   useEffect(() => {
-    axios
-      .get("http://localhost:3000/mock/dinner.json")
+    setTimeout(() => {
+      axios
+        .get(urlList[tabNum])
 
-      .then((res) => {
-        setImgUrl(res.data);
-      });
-  }, []);
-
-  return imgUrl;
-};
-
-const ImgBox = (props) => {
-  const ImgUrl = GetImg();
+        .then((res) => {
+          setImgUrl(res.data);
+        });
+    }, 1500);
+  }, [tabNum]);
 
   return (
     <ImgDisplay>
-      <ImgContainer {...props}>
+      <ImgContainer downScreen={downScreen}>
         {[...Array(7)].map((n, boxindex) => {
           return (
-            <ImgColmnBox {...props} id={`imgcolmn${boxindex}`} key={boxindex}>
-              {ImgUrl &&
-                ImgUrl.map((item, index) => {
+            <ImgColmnBox
+              changeImg={changeImg}
+              id={`imgcolmn${boxindex}`}
+              key={boxindex}
+            >
+              {imgUrl &&
+                imgUrl.map((item, index) => {
                   return (
                     index >= Number(boxindex) * 5 &&
                     index < (Number(boxindex) + 1) * 5 && (
@@ -48,8 +49,6 @@ const ImgBox = (props) => {
 
 export default ImgBox;
 
-////////////////////스타일드 컴포넌트///////////////////////////
-
 const ImgDisplay = styled.div`
   width: 100vw;
   height: 100vh;
@@ -65,16 +64,12 @@ const ImgContainer = styled.div`
   position: absolute;
   left: 50%;
   z-index: 5;
-  top: 0px;
-
+  top: 0;
   width: 1750px;
   height: 100vh;
-  transition: top 1.5s ease-in;
-  ${(props) =>
-    props.downScreen &&
-    css`
-      top: -980px;
-    `}
+  transition: top 2s cubic-bezier(0.9, 0, 0.5, 1);
+
+  top: ${({ downScreen }) => (downScreen ? "-980px" : "0px")};
 `;
 
 const ImgColmnBox = styled.div`
@@ -83,18 +78,41 @@ const ImgColmnBox = styled.div`
   width: 236px;
   height: 250vh;
   margin: 10px;
-  top: 0px;
+  opacity: ${({ changeImg }) => (changeImg ? 0 : 1)};
 
-  &#imgcolmn1,
+  &#imgcolmn0 {
+    top: ${({ changeImg }) => (changeImg ? "-50px" : "0px")};
+    transition: top 0.5s ease-out, opacity 0.5s;
+  }
+
+  &#imgcolmn6 {
+    top: ${({ changeImg }) => (changeImg ? "-50px" : "0px")};
+    transition: top 0.5s ease-out 1.2s, opacity 0.5s 1.2s;
+  }
+
+  &#imgcolmn1 {
+    top: ${({ changeImg }) => (changeImg ? "100px" : "150px")};
+    transition: top 0.5s ease-out 0.2s, opacity 0.5s 0.2s;
+  }
+
   &#imgcolmn5 {
-    top: 150px;
+    top: ${({ changeImg }) => (changeImg ? "100px" : "150px")};
+    transition: top 0.5s ease-out 1s, opacity 0.5s 1s;
   }
-  &#imgcolmn2,
+
+  &#imgcolmn2 {
+    top: ${({ changeImg }) => (changeImg ? "200px" : "250px")};
+    transition: top 0.5s ease-out 0.4s, opacity 0.5s 0.4s;
+  }
+
   &#imgcolmn4 {
-    top: 250px;
+    top: ${({ changeImg }) => (changeImg ? "200px" : "250px")};
+    transition: top 0.5s ease-out 0.8s, opacity 0.5s 0.8s;
   }
+
   &#imgcolmn3 {
-    top: 400px;
+    top: ${({ changeImg }) => (changeImg ? "350px" : "400px")};
+    transition: top 0.5s ease-out 0.6s, opacity 0.5s 0.6s;
   }
 `;
 

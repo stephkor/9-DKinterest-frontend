@@ -1,22 +1,22 @@
 import React from "react";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
-const FooterList = [
-  "서비스 약관",
-  "개인정보 보호정책",
-  "도움말",
-  "iphon 앱",
-  "Android 앱",
-  "사용자",
-  "컬렉션",
-  "주제",
-];
+const FooterGuest = ({ downScreen, isModal }) => {
+  const FooterList = [
+    "서비스 약관",
+    "개인정보 보호정책",
+    "도움말",
+    "iphon 앱",
+    "Android 앱",
+    "사용자",
+    "컬렉션",
+    "주제",
+  ];
 
-const FooterGuest = (props) => {
   return (
     <>
-      <Gradient {...props} />
-      <FooterBar {...props}>
+      <Gradient downScreen={downScreen} isModal={isModal} />
+      <FooterBar downScreen={downScreen}>
         {FooterList.map((list, index) => (
           <TextBtn key={index}>{list}</TextBtn>
         ))}
@@ -27,8 +27,6 @@ const FooterGuest = (props) => {
 
 export default FooterGuest;
 
-////////////////////스타일드 컴포넌트///////////////////////////
-
 const Gradient = styled.div`
   position: fixed;
 
@@ -36,11 +34,11 @@ const Gradient = styled.div`
   height: 200px;
   z-index: 150;
   background: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
-  bottom: ${(props) => (props.downScreen ? "-200px" : "0px")};
-  transition: ${(props) =>
-    props.downScreen
-      ? "bottom 0.5s ease-in-out 0.5s"
-      : "bottom 1s ease-in-out 1s"};
+  bottom: ${({ downScreen }) => (downScreen ? "-200px" : "0px")};
+  opacity: ${({ isModal }) => (isModal ? 0 : 1)};
+  transition: ${({ downScreen }) =>
+    downScreen ? "bottom 0.5s ease-in-out 0.5s" : "bottom 1s ease-in-out 1s"};
+  pointer-events: ${({ isModal }) => (isModal ? "none" : "auto")};
 `;
 
 const FooterBar = styled.footer`
@@ -54,12 +52,11 @@ const FooterBar = styled.footer`
   background-color: white;
   z-index: 100;
 
-  opacity: ${(props) => (props.downScreen ? 1 : 0)};
-  transition: ${(props) =>
-    props.downScreen
-      ? "opacity 0.5s ease-in-out 1.5s"
-      : "opacity 1s ease-in-out"};
-  pointer-events: ${(props) => (props.downScreen ? "auto" : "none")};
+  opacity: ${({ downScreen }) => (downScreen ? 1 : 0)};
+  transition: ${({ downScreen }) =>
+    downScreen ? "opacity 0.5s ease-in-out 1.5s" : "opacity 1s ease-in-out"};
+
+  pointer-events: ${({ downScreen }) => (downScreen ? "auto" : "none")};
 `;
 
 const TextBtn = styled.button`

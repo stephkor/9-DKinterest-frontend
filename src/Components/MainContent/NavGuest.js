@@ -1,26 +1,19 @@
-import React, { useState } from "react";
+import React from "react";
 import styled, { css } from "styled-components";
-import { PinterestSVG } from "./SvgPath";
-import ClearRoundedIcon from "@material-ui/icons/ClearRounded";
+import { PinterestSVG } from "./Config";
 
-const NavGuest = (props) => {
+const NavGuest = ({
+  handleLock,
+  handleModal,
+  isLock,
+  isModal,
+  downScreen,
+  setIsSignUp,
+}) => {
   return (
     <>
-      {!props.downScreen && props.isModal && (
-        <ModalLogin>
-          <IconWrap isModal={props.isModal}>
-            <Arrow
-              onClick={() => {
-                props.handleLock(!props.isLock);
-                props.handleModal(!props.isModal);
-              }}
-              style={{ fontSize: 30 }}
-            />
-          </IconWrap>
-        </ModalLogin>
-      )}
-      <NavBox {...props}>
-        <LogoBox {...props}>
+      <NavBox downScreen={downScreen}>
+        <LogoBox downScreen={downScreen}>
           <Logo>
             <svg viewBox="0 0 24 24">
               <circle />
@@ -30,12 +23,21 @@ const NavGuest = (props) => {
           Pinterest
         </LogoBox>
 
-        <ButtonBox {...props}>
-          <SignInBtn>가입하기</SignInBtn>
+        <ButtonBox downScreen={downScreen}>
+          <SignInBtn
+            onClick={() => {
+              handleLock(true);
+              handleModal(true);
+              setIsSignUp(true);
+            }}
+          >
+            가입하기
+          </SignInBtn>
           <LogInBtn
             onClick={() => {
-              props.handleLock(!props.isLock);
-              props.handleModal(!props.isModal);
+              handleLock(true);
+              handleModal(true);
+              setIsSignUp(false);
             }}
           >
             로그인
@@ -51,38 +53,6 @@ const NavGuest = (props) => {
 
 export default NavGuest;
 
-////////////////////스타일드 컴포넌트///////////////////////////
-
-const IconWrap = styled.div`
-  position: fixed;
-  top: 25px;
-  right: 30px;
-  z-index: 1000;
-  ${(props) =>
-    props.isModal
-      ? css`
-          opacity: 1;
-          transition: opacity 0.5s ease-in-out 0.3s;
-        `
-      : css`
-          opacity: 1;
-          transition: opacity 0.5s ease-in-out 1.5s;
-        `}
-`;
-
-const Arrow = styled(ClearRoundedIcon)`
-  color: white;
-
-  cursor: pointer;
-`;
-
-const ModalLogin = styled.div`
-  z-index: 1000;
-  position: fixed;
-  width: 100vw;
-  height: 100vh;
-`;
-
 const NavBox = styled.nav`
   background-color: white;
   height: 80px;
@@ -91,8 +61,8 @@ const NavBox = styled.nav`
   display: flex;
   z-index: 100;
   top: 0px;
-  ${(props) =>
-    props.downScreen &&
+  ${({ downScreen }) =>
+    downScreen &&
     css`
       top: -80px;
       transition: top 0.5s ease-in 0.5s;
@@ -110,8 +80,8 @@ const LogoBox = styled.div`
   color: rgb(230, 0, 35);
   top: 0px;
   transition: top 0.5s linear 1.5s;
-  ${(props) =>
-    props.downScreen &&
+  ${({ downScreen }) =>
+    downScreen &&
     css`
       top: -80px;
     `}
@@ -149,8 +119,8 @@ const ButtonBox = styled.div`
   align-items: center;
   top: 0px;
   transition: top 0.5s linear 1.5s;
-  ${(props) =>
-    props.downScreen &&
+  ${({ downScreen }) =>
+    downScreen &&
     css`
       top: -80px;
     `}
