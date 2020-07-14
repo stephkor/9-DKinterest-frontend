@@ -13,7 +13,7 @@ const InputField = () => {
     event.target.rows = MIN_ROWS;
     const currRows = ~~(event.target.scrollHeight / TEXTAREA_LINE_HEIGHT);
     event.target.rows = currRows;
-    setComment(event.target.value.trim());
+    setComment(event.target.value);
   };
 
   const CancelComment = () => {
@@ -38,7 +38,7 @@ const InputField = () => {
       </AddComment>
       <ButtonsContainer isActive={isActive}>
         <CancelButton onClick={CancelComment}>취소</CancelButton>
-        <CompletelButton comment={comment}>완료</CompletelButton>
+        <CompletelButton comment={comment.trim()}>완료</CompletelButton>
       </ButtonsContainer>
     </Container>
   );
