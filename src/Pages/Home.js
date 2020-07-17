@@ -1,6 +1,7 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import PinWrap from "./PinWrap";
-import NavBar from "./NavBar";
+import NavBar from "../Components/NavBar";
 import styled from "styled-components";
 
 class Home extends React.Component {
@@ -17,16 +18,17 @@ class Home extends React.Component {
 
   getData = () => {
     const axios = require("axios");
-
     axios
-      .get(`mock.json`)
+      .get('http://10.58.0.193:8000/board_pin/homepin', {
+           headers : {
+              Authorization: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImRid2xzZmRhMTJAbmF2ZXIuY29tIn0.MtgXuZcXktWemphzR_Y5VZzx2c1gM5khTlAm8aF7uJs"
+          }
+      })
       .then((res) => {
-        console.log(res);
-        let result = res.data.category.slice(
+        let result = res.data.pin_all.slice(
           this.state.preItems,
           this.state.items
         );
-        console.log(result);
         return result;
       })
       .then((result) => {
@@ -51,13 +53,15 @@ class Home extends React.Component {
       const axios = require("axios");
 
       axios
-        .get(`mock.json`)
+        .get('http://10.58.0.193:8000/board_pin/homepin', { headers : {
+            Authorization: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImRid2xzZmRhMTJAbmF2ZXIuY29tIn0.MtgXuZcXktWemphzR_Y5VZzx2c1gM5khTlAm8aF7uJs"
+        }
+    })
         .then((res) => {
-          let result = res.data.category.slice(
+          let result = res.data.pin_all.slice(
             this.state.items,
             this.state.items + 10
           );
-          console.log("컴디업", result);
           return result;
         })
         .then((result) => {
@@ -76,11 +80,11 @@ class Home extends React.Component {
   };
 
   render() {
-    const { category } = this.state;
+    const { category,dropClick } = this.state;
     return (
       <>
-        <NavBar />
-        <Dropdown style={{ display: this.state.dropClick ? "flex" : "none" }}>
+        <NavBar dropdown={this.dropdownHandler} />
+        <Dropdown dropClick={dropClick}>
           <ul>
             <span>계정</span>
             <li>다른 계정 추가</li>
@@ -97,9 +101,12 @@ class Home extends React.Component {
           </ul>
         </Dropdown>
         <PinList>
-          {category.map((data, idx) => {
-            // console.log(data);
-            return <PinWrap key={idx} componentKey={idx + 1} data={data} />;
+        {category.map((data, idx) => {
+            return (
+              <Link exact to="/pin/:id">
+                <PinWrap key={idx} componentKey={idx + 1} data={data} />
+              </Link>
+            );
           })}
         </PinList>
       </>
@@ -117,7 +124,7 @@ const PinList = styled.div`
 `;
 
 const Dropdown = styled.div`
-  display: flex;
+  display:  ${props => props.dropClick ? "flex" : "none"} ;
   flex-direction: column;
   justify-content: flex-start;
   align-content: center;
@@ -148,16 +155,5 @@ const Dropdown = styled.div`
     }
   }
 `;
-
-// const loading = styled.div`
-//   width: 50%;
-//   margin: 0 auto;
-
-//   img {
-//     height: 50px;
-//     position: absolute;
-//     left: 50%;
-//   }
-// `;
 
 export default Home;

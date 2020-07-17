@@ -1,0 +1,34 @@
+{
+	"board": [
+		{
+			"boardId": 2,
+			"boardName": "애완동물2",
+			"pinId": [2],
+			"pinImageUrl": ["https://i.pinimg.com/564x/12/4b/aa/124baaf9d31a23cc89c8e6e59a297251.jpg"]
+		},
+		{
+			"boardId": 53,
+			"boardName": "예술13",
+			"pinId": [53],
+			"pinImageUrl": ["https://i.pinimg.com/564x/3f/8c/6a/3f8c6ab8fb7297246a219afe2ef3758a.jpg"]
+		},
+		{
+			"boardId": 104,
+			"boardName": "아이디어 제품24",
+			"pinId": [104],
+			"pinImageUrl": ["https://i.pinimg.com/564x/7f/e1/9a/7fe19a32dc3f2f8c83a4b9732bd928e1.jpg"]
+		},
+		{
+			"boardId": 155,
+			"boardName": "영감을 주는 문구35",
+			"pinId": [155],
+			"pinImageUrl": ["https://i.pinimg.com/564x/6a/9b/c1/6a9bc1e6312102bbd168793ea82e8c4f.jpg"]
+		},
+		{
+			"boardId": 206,
+			"boardName": "키친6",
+			"pinId": [206],
+			"pinImageUrl": ["https://i.pinimg.com/564x/24/63/37/24633776aede7ccde32a8233f7ca8011.jpg"]
+		}
+	]
+}
