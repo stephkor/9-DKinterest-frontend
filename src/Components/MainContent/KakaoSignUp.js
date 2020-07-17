@@ -1,44 +1,29 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 //import { GoogleLogin } from "react-google-login";
 import KakaoLogin from "react-kakao-login";
 import styled from "styled-components";
-import { FacebookSVG, GoogleSVG, PinterestSVG, KakaoSVG } from "./SvgPath";
+import { KakaoSVG } from "./Config";
 import axios from "axios";
 
-class KakaoSignUp extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      id: "",
-      name: "",
-      provider: "",
-    };
-  }
+const KakaoSignUp = ({ isCategory, setIsCategory }) => {
+  const [id, setId] = useState("");
+  const [name, setName] = useState("");
+  const [provider, setProvider] = useState("");
 
-  // Google Login
-  // responseGoogle = (res) => {
-  //   this.setState({
-  //     id: res.googleId,
-  //     name: res.profileObj.name,
-  //     provider: "google",
-  //   });
-  // };
-  // Kakao Login
-  responseKakao = (res) => {
-    this.setState({
-      id: res.profile.id,
-      name: res.profile.properties.nickname,
-      provider: "kakao",
-    });
+  const responseKakao = (res) => {
+    setId(res.profile.id);
+    setName(res.profile.properties.nickname);
+    setProvider("kakao");
 
     localStorage.setItem("access_token", res.response.access_token);
-    console.log({ Authorization: res.response.access_token });
+    setIsCategory(res.response.access_token ? true : false);
+
     axios
       .post(
         "http://10.58.0.152:8000/account/kakao_login",
         {},
         {
-          headers: { Authorization: res.response.access_token },
+          headers: { Authorization: localStorage.getItem("access_token") },
         }
       )
       .then((axRes) => {
@@ -46,41 +31,32 @@ class KakaoSignUp extends Component {
       });
   };
 
-  // Login Fail
-  responseFail = (err) => {
+  const responseFail = (err) => {
     console.error(err);
   };
 
-  render() {
-    return (
-      <Container>
-        {/* <GoogleLogin
-          clientId={process.env.REACT_APP_Google}
-          buttonText="Google"
-          onSuccess={this.responseGoogle}
-          onFailure={this.responseFail}
-        /> */}
-        <KakaoButton
-          jsKey={"5687f9542fe584e45f25e17a6c34f950"}
-          buttonText="Kakao"
-          onSuccess={this.responseKakao}
-          onFailure={this.responseFail}
-          getProfile="true"
+  return (
+    <Container>
+      <KakaoButton
+        jsKey={"5687f9542fe584e45f25e17a6c34f950"}
+        buttonText="Kakao"
+        onSuccess={responseKakao}
+        onFailure={responseFail}
+        getProfile="true"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="25"
+          height="25"
+          viewBox="0 0 256 256"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="25"
-            height="25"
-            viewBox="0 0 256 256"
-          >
-            <path d={KakaoSVG} />
-          </svg>
-          카카오로 계속하기
-        </KakaoButton>
-      </Container>
-    );
-  }
-}
+          <path d={KakaoSVG} />
+        </svg>
+        카카오로 계속하기
+      </KakaoButton>
+    </Container>
+  );
+};
 
 const Container = styled.div`
   display: flex;

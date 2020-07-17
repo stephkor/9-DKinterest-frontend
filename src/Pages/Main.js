@@ -1,16 +1,21 @@
 import React, { useState, useEffect } from "react";
-import styled, { css } from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 import NavGuest from "Components/MainContent/NavGuest";
 import TitleGuest from "Components/MainContent/TitleGuest";
 import SignInPage from "Components/MainContent/SignInPage";
 import FooterGuest from "Components/MainContent/FooterGuest";
 import ImgBox from "Components/MainContent/ImgBox";
 import ExpandMoreRoundedIcon from "@material-ui/icons/ExpandMoreRounded";
+import { Flash, Bounce, FadeOut, FadeIn } from "animate-css-styled-components";
 
-const useScroll = () => {
+const Main = ({ history }) => {
   const [isDownScreen, setIsDownScreen] = useState(false);
   const [isLock, setIsLock] = useState(false);
   const [isModal, setIsModal] = useState(false);
+  const [tabNum, setTabNum] = useState(0);
+  const [changeImg, setChangeImg] = useState(false);
+  const [isSignUp, setIsSignUp] = useState(true);
+  const [isCategory, setIsCategory] = useState(false);
 
   const onScroll = (event) => {
     if (!isLock) {
@@ -32,46 +37,61 @@ const useScroll = () => {
     return () => {
       window.removeEventListener("wheel", onScroll);
     };
-  }, [isDownScreen, onScroll]);
-  return {
-    isModal,
-    setIsModal,
-    isDownScreen,
-    isLock,
-    setIsLock,
-    setIsDownScreen,
-  };
-};
 
-const Main = () => {
-  const screenState = useScroll();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLock]);
 
   return (
-    <>
-      <body>
-        <Body>
-          <IconWrap downScreen={screenState.isDownScreen}>
-            <Arrow style={{ fontSize: 50 }} />
-          </IconWrap>
-          <NavGuest
-            downScreen={screenState.isDownScreen}
-            handleLock={screenState.setIsLock}
-            isLock={screenState.isLock}
-            isModal={screenState.isModal}
-            handleModal={screenState.setIsModal}
+    <Body>
+      {!isCategory && (
+        <UpIconWrap downScreen={isDownScreen} isModal={isModal}>
+          <UpArrow
+            tabNum={tabNum}
+            onClick={() => setIsDownScreen(!isDownScreen)}
+            id={"upArrow"}
           />
+        </UpIconWrap>
+      )}
 
-          <TitleGuest downScreen={screenState.isDownScreen} />
-          <ImgBox downScreen={screenState.isDownScreen} />
-          <SignInPage
-            downScreen={screenState.isDownScreen}
-            isModal={screenState.isModal}
-            handleModal={screenState.setIsModal}
-          />
-          <FooterGuest downScreen={screenState.isDownScreen} />
-        </Body>
-      </body>
-    </>
+      <DownIconWrap downScreen={isDownScreen} isModal={isModal}>
+        <DownArrow
+          tabNum={tabNum}
+          onClick={() => setIsDownScreen(!isDownScreen)}
+          id={"downArrow"}
+        />
+      </DownIconWrap>
+
+      <NavGuest
+        downScreen={isDownScreen}
+        handleLock={setIsLock}
+        isLock={isLock}
+        isModal={isModal}
+        handleModal={setIsModal}
+        setIsSignUp={setIsSignUp}
+      />
+
+      <TitleGuest
+        downScreen={isDownScreen}
+        changeTab={setTabNum}
+        tabNum={tabNum}
+        changeImg={changeImg}
+        setChangeImg={setChangeImg}
+      />
+      <ImgBox downScreen={isDownScreen} tabNum={tabNum} changeImg={changeImg} />
+      <SignInPage
+        handleLock={setIsLock}
+        isLock={isLock}
+        downScreen={isDownScreen}
+        isModal={isModal}
+        handleModal={setIsModal}
+        isSignUp={isSignUp}
+        setIsSignUp={setIsSignUp}
+        isCategory={isCategory}
+        setIsCategory={setIsCategory}
+        history={history}
+      />
+      <FooterGuest downScreen={isDownScreen} isModal={isModal} />
+    </Body>
   );
 };
 
@@ -85,27 +105,62 @@ const Body = styled.div`
   overflow: hidden;
 `;
 
-const IconWrap = styled.div`
+const waveMoveDown = keyframes`
+  0%{
+    bottom:35px;
+  }
+  50%{
+    bottom:10px;
+  }
+  100%{
+    bottom:35px;
+  }
+`;
+
+const DownIconWrap = styled.div`
+  animation: ${waveMoveDown} 2s ease-in-out infinite;
   position: fixed;
   bottom: 35px;
   left: 48.5vw;
   z-index: 1000;
-  ${(props) =>
-    props.downScreen
-      ? css`
-          opacity: 0;
-          transition: opacity 0.5s ease-in-out 0.3s;
-        `
-      : css`
-          opacity: 1;
-          transition: opacity 0.5s ease-in-out 1.5s;
-        `}
+  visibility: ${({ isModal }) => (isModal ? "hidden" : "visible")};
+  opacity: ${({ downScreen }) => (downScreen ? 0 : 1)};
+  transition: ${({ downScreen }) =>
+    downScreen ? "opacity 0.5s ease-in-out" : "opacity 0.5s ease-in-out 1.5s"};
 `;
 
-const Arrow = styled(ExpandMoreRoundedIcon)`
+const DownArrow = styled(ExpandMoreRoundedIcon)`
   color: white;
+  &#downArrow {
+    font-size: 50px;
+  }
+  background-color: ${({ tabNum }) =>
+    tabNum === 0
+      ? "#c28b00"
+      : tabNum === 1
+      ? "#618C7B"
+      : tabNum === 2
+      ? "#0376D3"
+      : "#407A57"};
+  border-radius: 50%;
+  cursor: pointer;
+`;
 
-  background-color: #c28b00;
+const UpIconWrap = styled(DownIconWrap)`
+  animation: none;
+  transform: scaleY(-1);
+  bottom: 90%;
+  opacity: ${({ downScreen }) => (!downScreen ? 0 : 1)};
+  transition: ${({ downScreen }) =>
+    downScreen ? "opacity 0.5s ease-in-out 1.5s" : "opacity 0.5s ease-in-out"};
+`;
+
+const UpArrow = styled(ExpandMoreRoundedIcon)`
+  color: black;
+  &#upArrow {
+    font-size: 50px;
+  }
+  background-color: white;
   border-radius: 50%;
   cursor: pointer;
 `;
